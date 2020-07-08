@@ -16,6 +16,7 @@ FROM pdidevel/xenial_libs_cmake3.5
 
 USER 0
 
+RUN apt-get remove cmake
 COPY --from=builder /usr/local /usr/local
 
 RUN apt-get update -y \
