@@ -35,6 +35,14 @@ RUN curl -Lso netcdf.tar.gz 'https://www.unidata.ucar.edu/downloads/netcdf/ftp/n
  && make -j \
  && make install
 
+RUN curl -Lso hwloc.tar.gz https://download.open-mpi.org/release/hwloc/v1.11/hwloc-1.11.13.tar.gz \
+ && tar -xf hwloc.tar.gz \
+ && cd hwloc* \
+ && mkdir /test \
+ && ./configure \
+ && make -j \
+ && make install
+
 FROM pdidevel/xenial_cmake3.5
 
 USER 0
@@ -42,6 +50,8 @@ USER 0
 COPY --from=builder /usr/local /usr/local
 
 RUN apt-get update -y \
+ && apt-get purge -y \
+    libhwloc* \
  && apt-get upgrade -y \
  && apt-get install -y \
     astyle \

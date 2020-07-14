@@ -14,6 +14,14 @@ RUN curl -Lso cmake.tar.gz https://cmake.org/files/v3.10/cmake-3.10.0.tar.gz \
  && make -j 4 \
  && make install
 
+RUN curl -Lso hwloc.tar.gz https://download.open-mpi.org/release/hwloc/v1.11/hwloc-1.11.13.tar.gz \
+ && tar -xf hwloc.tar.gz \
+ && cd hwloc* \
+ && mkdir /test \
+ && ./configure \
+ && make -j \
+ && make install
+
 FROM pdidevel/xenial_libs_cmake3.5
 
 USER 0
@@ -23,6 +31,7 @@ COPY --from=builder /usr/local /usr/local
 RUN apt-get update -y \
  && apt-get purge -y \
     cmake \
+    libhwloc* \
  && apt-get autoremove -y \
  && apt-get upgrade -y \
  && apt-get install -y \
