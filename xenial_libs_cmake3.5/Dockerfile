@@ -2,11 +2,6 @@ FROM pdidevel/xenial_cmake3.5 AS builder
 
 USER 0
 
-RUN apt-get update -y \
- && apt-get upgrade -y \
- && apt-get install -y \
-    curl
-
 RUN curl -Lso doxygen.tar.gz https://sourceforge.net/projects/doxygen/files/rel-1.8.13/doxygen-1.8.13.src.tar.gz \
  && tar -xf doxygen.tar.gz \
  && cd doxygen* \
@@ -48,6 +43,7 @@ RUN apt-get update -y \
  && apt-get upgrade -y \
  && apt-get install -y \
     astyle \
+    libhdf5-mpich-dev \
     libparaconf-dev \
     libspdlog-dev \
     pybind11-dev \
