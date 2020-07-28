@@ -22,7 +22,6 @@ RUN apt-get update -y \
  && apt-get upgrade -y \
  && apt-get clean \
  && apt-get autoclean \
- && pip3 install --upgrade pip \
  && pip3 install --no-cache-dir mpi4py \
  && ldconfig
 
