@@ -19,9 +19,9 @@ jobs:
     - name: test
       run: |
         sh test_docker_image.sh pdidevel/xenial_cmake3.5 apt-get
-        sh test_docker_image.sh pdidevel/xenial_cmake3.10 apt-get
+        sh test_docker_image.sh pdidevel/xenial_cmake3.10 apt-get true
         sh test_docker_image.sh pdidevel/xenial_libs_cmake3.5 apt-get
-        sh test_docker_image.sh pdidevel/xenial_libs_cmake3.10 apt-get
+        sh test_docker_image.sh pdidevel/xenial_libs_cmake3.10 apt-get true
     - uses: actions/checkout@v2
     - name: publish
       if: ${{ github.event_name == 'push' }}
@@ -48,9 +48,9 @@ jobs:
     - name: test
       run: |
         sh test_docker_image.sh pdidevel/centos_cmake3.5 yum
-        sh test_docker_image.sh pdidevel/centos_cmake3.10 yum
+        sh test_docker_image.sh pdidevel/centos_cmake3.10 yum true
         sh test_docker_image.sh pdidevel/centos_libs_cmake3.5 yum
-        sh test_docker_image.sh pdidevel/centos_libs_cmake3.10 yum
+        sh test_docker_image.sh pdidevel/centos_libs_cmake3.10 yum true
     - uses: actions/checkout@v2
     - name: publish
       if: ${{ github.event_name == 'push' }}
