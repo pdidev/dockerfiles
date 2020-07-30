@@ -5,5 +5,5 @@ docker run -t pdidevel/centos_cmake3.10 /bin/bash -c \
                                         tar -xf pdi.tar.gz && \
                                         cd pdi* && \
                                         cmake -DDIST_PROFILE=Devel -DUSE_DEFAULT=EMBEDDED . && \
-                                        make && \
+                                        make -j && \
                                         ctest --output-on-failure"

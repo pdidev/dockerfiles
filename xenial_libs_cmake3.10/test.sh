@@ -5,5 +5,5 @@ docker run -t pdidevel/xenial_libs_cmake3.10 /bin/bash -c \
                                             tar -xf pdi.tar.gz && \
                                             cd pdi* && \
                                             cmake -DDIST_PROFILE=Devel -DUSE_DEFAULT=SYSTEM -DUSE_Bpp=SYSTEM . && \
-                                            make && \
+                                            make -j && \
                                             ctest --output-on-failure"
