@@ -47,13 +47,13 @@ jobs:
         docker build -t pdidevel/centos_libs_cmake3.10 centos_libs_cmake3.10
         docker build -t pdidevel/centos_libs_cmake3.5 centos_libs_cmake3.5
     - name: centos_cmake3.5_test
-      run: sh centos_cmake3.5/test.sh
+      run: DISABLE_CTEST=1 && sh centos_cmake3.5/test.sh
     - name: centos_cmake3.10_test
-      run: sh centos_cmake3.10/test.sh
+      run: DISABLE_CTEST=1 && sh centos_cmake3.10/test.sh
     - name: centos_libs_cmake3.5_test
-      run: sh centos_libs_cmake3.5/test.sh
+      run: DISABLE_CTEST=1 && sh centos_libs_cmake3.5/test.sh
     - name: centos_libs_cmake3.10_test
-      run: sh centos_libs_cmake3.10/test.sh        
+      run: DISABLE_CTEST=1 && sh centos_libs_cmake3.10/test.sh        
     - uses: actions/checkout@v2
     - name: publish
       if: ${{ github.event_name == 'push' }}
