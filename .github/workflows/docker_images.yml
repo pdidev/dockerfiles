@@ -3,7 +3,6 @@ on:
   push:
     branches: [ master ]
   pull_request:
-    branches: [ master ]
 jobs:
   build_xenial:
     runs-on: ubuntu-latest
@@ -15,30 +14,26 @@ jobs:
         docker build -t pdidevel/xenial_cmake3.10 xenial_cmake3.10
         docker build -t pdidevel/xenial_libs_cmake3.5 xenial_libs_cmake3.5
         docker build -t pdidevel/xenial_libs_cmake3.10 xenial_libs_cmake3.10
+    - uses: actions/checkout@v2
+      with:
+        repository: https://gitlab.maisondelasimulation.fr/pdidev/pdi.git
+        path: pdi_repo
     - name: xenial_cmake3.5_test
-      run: docker run -t pdidevel/xenial_cmake3.5 /bin/bash -c \
-                              "curl -Lso pdi.tar.gz https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/master/pdi-master.tar.gz && \
-                              tar -xf pdi.tar.gz && \
-                              cd pdi* && \
-                              sh tools/build_scripts/xenial_cmake3.5_embedded.sh"
+      run: docker run -t pdidevel/xenial_cmake3.5 -v $PWD/pdi_repo:/data/ /bin/bash -c \
+        "mkdir /tmp/pdi_repo && cp -a /data/ /tmp/pdi_repo && cd /tmp/pdi_repo/data/ \
+         && sh tools/build_scripts/xenial_cmake3.5_embedded.sh"
     - name: xenial_cmake3.10_test
-      run: docker run -t pdidevel/xenial_cmake3.10 /bin/bash -c \
-                              "curl -Lso pdi.tar.gz https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/master/pdi-master.tar.gz && \
-                              tar -xf pdi.tar.gz && \
-                              cd pdi* && \
-                              sh tools/build_scripts/xenial_cmake3.10_embedded.sh"
+      run: docker run -t pdidevel/xenial_cmake3.10 -v $PWD/pdi_repo:/data/ /bin/bash -c \
+        "mkdir /tmp/pdi_repo && cp -a /data/ /tmp/pdi_repo && cd /tmp/pdi_repo/data/ \
+         && sh tools/build_scripts/xenial_cmake3.10_embedded.sh"
     - name: xenial_libs_cmake3.5_test
-      run: docker run -t pdidevel/xenial_libs_cmake3.5 /bin/bash -c \
-                              "curl -Lso pdi.tar.gz https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/master/pdi-master.tar.gz && \
-                              tar -xf pdi.tar.gz && \
-                              cd pdi* && \
-                              sh tools/build_scripts/xenial_cmake3.5_system.sh"
+      run: docker run -t pdidevel/xenial_libs_cmake3.5 -v $PWD/pdi_repo:/data/ /bin/bash -c \
+        "mkdir /tmp/pdi_repo && cp -a /data/ /tmp/pdi_repo && cd /tmp/pdi_repo/data/ \
+         && sh tools/build_scripts/xenial_cmake3.5_system.sh"
     - name: xenial_libs_cmake3.10_test
-      run: docker run -t pdidevel/xenial_libs_cmake3.10 /bin/bash -c \
-                              "curl -Lso pdi.tar.gz https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/master/pdi-master.tar.gz && \
-                              tar -xf pdi.tar.gz && \
-                              cd pdi* && \
-                              sh tools/build_scripts/xenial_cmake3.10_system.sh"
+      run: docker run -t pdidevel/xenial_libs_cmake3.10 -v $PWD/pdi_repo:/data/ /bin/bash -c \
+        "mkdir /tmp/pdi_repo && cp -a /data/ /tmp/pdi_repo && cd /tmp/pdi_repo/data/ \
+         && sh tools/build_scripts/xenial_cmake3.10_system.sh"
     - name: publish
       if: ${{ github.event_name == 'push' }}
       env:
