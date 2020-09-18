@@ -62,7 +62,8 @@ jobs:
         docker build -t pdidevel/centos_libs_cmake3.5 centos_libs_cmake3.5
     - name: centos_cmake3.5_test
       run: docker run -t pdidevel/centos_cmake3.5 /bin/bash -c \
-                              "echo TEST"
+                              "curl -Lso pdi.tar.gz https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/master/pdi-master.tar.gz && \
+                              tar -xf pdi.tar.gz"
     - name: centos_cmake3.10_test
       run: docker run -t pdidevel/centos_cmake3.10 /bin/bash -c \
                               "curl -Lso pdi.tar.gz https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/master/pdi-master.tar.gz && \
