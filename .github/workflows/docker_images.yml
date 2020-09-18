@@ -8,32 +8,41 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: build
+    - name: checkout PDI master
       run: |
-        docker build -t pdidevel/xenial_cmake3.5 xenial_cmake3.5
+        git clone https://gitlab.maisondelasimulation.fr/pdidev/pdi.git pdi_repo
+    - name: build xenial_cmake3.5
+      run: |
+        docker build -t pdidevel/xenial_cmake3.5
+    - name: test xenial_cmake3.5
+      run: |
+        docker run -t pdidevel/xenial_cmake3.5 -v $PWD/pdi_repo:/data/ /bin/bash -c \
+            "mkdir /tmp/pdi_repo && cp -a /data/ /tmp/pdi_repo && cd /tmp/pdi_repo/data/ \
+             && sh tools/build_scripts/xenial_cmake3.5_embedded.sh"
+    - name: build xenial_cmake3.10
+      run: |
         docker build -t pdidevel/xenial_cmake3.10 xenial_cmake3.10
+    - name: test xenial_cmake3.10
+      run: |
+        docker run -t pdidevel/xenial_cmake3.10 -v $PWD/pdi_repo:/data/ /bin/bash -c \
+            "mkdir /tmp/pdi_repo && cp -a /data/ /tmp/pdi_repo && cd /tmp/pdi_repo/data/ \
+             && sh tools/build_scripts/xenial_cmake3.10_embedded.sh"
+    - name: build xenial_libs_cmake3.5
+      run: |
         docker build -t pdidevel/xenial_libs_cmake3.5 xenial_libs_cmake3.5
+    - name: test xenial_libs_cmake3.5
+      run: |
+        docker run -t pdidevel/xenial_libs_cmake3.5 -v $PWD/pdi_repo:/data/ /bin/bash -c \
+            "mkdir /tmp/pdi_repo && cp -a /data/ /tmp/pdi_repo && cd /tmp/pdi_repo/data/ \
+             && sh tools/build_scripts/xenial_cmake3.5_system.sh"
+    - name: build xenial_libs_cmake3.10
+      run: |
         docker build -t pdidevel/xenial_libs_cmake3.10 xenial_libs_cmake3.10
-    - uses: actions/checkout@v2
-      with:
-        repository: https://gitlab.maisondelasimulation.fr/pdidev/pdi.git
-        path: pdi_repo
-    - name: xenial_cmake3.5_test
-      run: docker run -t pdidevel/xenial_cmake3.5 -v $PWD/pdi_repo:/data/ /bin/bash -c \
-        "mkdir /tmp/pdi_repo && cp -a /data/ /tmp/pdi_repo && cd /tmp/pdi_repo/data/ \
-         && sh tools/build_scripts/xenial_cmake3.5_embedded.sh"
-    - name: xenial_cmake3.10_test
-      run: docker run -t pdidevel/xenial_cmake3.10 -v $PWD/pdi_repo:/data/ /bin/bash -c \
-        "mkdir /tmp/pdi_repo && cp -a /data/ /tmp/pdi_repo && cd /tmp/pdi_repo/data/ \
-         && sh tools/build_scripts/xenial_cmake3.10_embedded.sh"
-    - name: xenial_libs_cmake3.5_test
-      run: docker run -t pdidevel/xenial_libs_cmake3.5 -v $PWD/pdi_repo:/data/ /bin/bash -c \
-        "mkdir /tmp/pdi_repo && cp -a /data/ /tmp/pdi_repo && cd /tmp/pdi_repo/data/ \
-         && sh tools/build_scripts/xenial_cmake3.5_system.sh"
-    - name: xenial_libs_cmake3.10_test
-      run: docker run -t pdidevel/xenial_libs_cmake3.10 -v $PWD/pdi_repo:/data/ /bin/bash -c \
-        "mkdir /tmp/pdi_repo && cp -a /data/ /tmp/pdi_repo && cd /tmp/pdi_repo/data/ \
-         && sh tools/build_scripts/xenial_cmake3.10_system.sh"
+    - name: test xenial_libs_cmake3.10
+      run: |
+        docker run -t pdidevel/xenial_libs_cmake3.10 -v $PWD/pdi_repo:/data/ /bin/bash -c \
+            "mkdir /tmp/pdi_repo && cp -a /data/ /tmp/pdi_repo && cd /tmp/pdi_repo/data/ \
+             && sh tools/build_scripts/xenial_cmake3.10_system.sh"
     - name: publish
       if: ${{ github.event_name == 'push' }}
       env:
@@ -48,35 +57,44 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - name: build
+    - name: checkout PDI master
+      run: |
+        git clone https://gitlab.maisondelasimulation.fr/pdidev/pdi.git pdi_repo
+    - name: build centos_base
       run: |
         docker build -t pdidevel/centos_base centos_base
+    - name: build centos_cmake3.5
+      run: |
         docker build -t pdidevel/centos_cmake3.5 centos_cmake3.5
+    - name: test centos_cmake3.5
+      run: |
+        docker run -t pdidevel/centos_cmake3.5 -v $PWD/pdi_repo:/data/ /bin/bash -c \
+            "mkdir /tmp/pdi_repo && cp -a /data/ /tmp/pdi_repo && cd /tmp/pdi_repo/data/ \
+             && DISABLE_CTEST=1 sh tools/build_scripts/centos_cmake3.5_embedded.sh"
+    - name: build centos_cmake3.10
+      run: |
         docker build -t pdidevel/centos_cmake3.10 centos_cmake3.10
-        docker build -t pdidevel/centos_libs_cmake3.10 centos_libs_cmake3.10
+    - name: test centos_cmake3.10
+      run: |
+        docker run -t pdidevel/centos_cmake3.10 -v $PWD/pdi_repo:/data/ /bin/bash -c \
+            "mkdir /tmp/pdi_repo && cp -a /data/ /tmp/pdi_repo && cd /tmp/pdi_repo/data/ \
+             && DISABLE_CTEST=1 sh tools/build_scripts/centos_cmake3.10_embedded.sh"
+    - name: build centos_libs_cmake3.5
+      run: |
         docker build -t pdidevel/centos_libs_cmake3.5 centos_libs_cmake3.5
-    - name: centos_cmake3.5_test
-      run: docker run -t pdidevel/centos_cmake3.5 /bin/bash -c \
-                              "curl -Lso pdi.tar.gz https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/master/pdi-master.tar.gz && \
-                              tar -xf pdi.tar.gz"
-    - name: centos_cmake3.10_test
-      run: docker run -t pdidevel/centos_cmake3.10 /bin/bash -c \
-                              "curl -Lso pdi.tar.gz https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/master/pdi-master.tar.gz && \
-                              tar -xf pdi.tar.gz && \
-                              cd pdi* && \
-                              DISABLE_CTEST=1 && sh tools/build_scripts/centos_cmake3.10_embedded.sh"
-    - name: centos_libs_cmake3.5_test
-      run: docker run -t pdidevel/centos_libs_cmake3.5 /bin/bash -c \
-                              "curl -Lso pdi.tar.gz https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/master/pdi-master.tar.gz && \
-                              tar -xf pdi.tar.gz && \
-                              cd pdi* && \
-                              DISABLE_CTEST=1 && sh tools/build_scripts/centos_cmake3.5_system.sh"
-    - name: centos_libs_cmake3.10_test
-      run: docker run -t pdidevel/centos_libs_cmake3.10 /bin/bash -c \
-                              "curl -Lso pdi.tar.gz https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/master/pdi-master.tar.gz && \
-                              tar -xf pdi.tar.gz && \
-                              cd pdi* && \
-                              DISABLE_CTEST=1 && sh tools/build_scripts/centos_cmake3.10_system.sh"     
+    - name: test centos_libs_cmake3.5
+      run: |
+        docker run -t pdidevel/centos_libs_cmake3.5 -v $PWD/pdi_repo:/data/ /bin/bash -c \
+            "mkdir /tmp/pdi_repo && cp -a /data/ /tmp/pdi_repo && cd /tmp/pdi_repo/data/ \
+             && DISABLE_CTEST=1 sh tools/build_scripts/centos_cmake3.5_system.sh"
+    - name: build centos_libs_cmake3.10
+      run: |
+        docker build -t pdidevel/centos_libs_cmake3.10 centos_libs_cmake3.10
+    - name: test centos_libs_cmake3.10
+      run: |
+        docker run -t pdidevel/centos_libs_cmake3.10 -v $PWD/pdi_repo:/data/ /bin/bash -c \
+            "mkdir /tmp/pdi_repo && cp -a /data/ /tmp/pdi_repo && cd /tmp/pdi_repo/data/ \
+             && DISABLE_CTEST=1 sh tools/build_scripts/centos_cmake3.10_system.sh"     
     - name: publish
       if: ${{ github.event_name == 'push' }}
       env:
