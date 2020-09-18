@@ -52,6 +52,8 @@ RUN useradd -d ${HOME} -m -u 1001 -U default
 USER 1001
 WORKDIR ${HOME}
 
+ENV PDI_SYSTEM=docker-centos-7
+
 ENV BASH_ENV=/etc/profile
 SHELL ["/bin/bash", "-c"]
 CMD ["/bin/bash"]
