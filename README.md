@@ -15,6 +15,13 @@ xenial_cmake3.5 -> xenial_libs_cmake3.5 -> xenial_libs_cmake3.10
                 `-> xenial_cmake3.10
 ```
 
+## Docker images tests
+All docker images are tested by scripts from PDI repository (https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/tree/master/tools/build_scripts).
+
+**To change testing, you have to change those scripts and update the gitlab CI yaml script.**
+
+*For now CentOS doesn't run `ctest` because of the unknown deadlocks in `HDF5`/`SIONlib` tests that only occurs on github CI.*
+
 ## centos_base
 
 Centos 7 with the minimal set of dependencies installed to build the full PDI

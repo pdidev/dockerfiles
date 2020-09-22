@@ -17,28 +17,28 @@ jobs:
         docker build -t pdidevel/xenial_libs_cmake3.10 xenial_libs_cmake3.10
     - name: xenial_cmake3.5_test
       run: docker run -t pdidevel/xenial_cmake3.5 /bin/bash -c \
-                              "curl -Lso pdi.tar.gz https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/master/pdi-master.tar.gz && \
-                              tar -xf pdi.tar.gz && \
-                              cd pdi* && \
-                              sh tools/build_scripts/xenial_cmake3.5_embedded.sh"
+                              \"curl -Lso pdi.tar.gz https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/master/pdi-master.tar.gz &&
+                              tar -xf pdi.tar.gz &&
+                              cd pdi* &&
+                              sh tools/build_scripts/xenial_cmake3.5_embedded.sh\"
     - name: xenial_cmake3.10_test
       run: docker run -t pdidevel/xenial_cmake3.10 /bin/bash -c \
-                              "curl -Lso pdi.tar.gz https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/master/pdi-master.tar.gz && \
-                              tar -xf pdi.tar.gz && \
-                              cd pdi* && \
-                              sh tools/build_scripts/xenial_cmake3.10_embedded.sh"
+                              \"curl -Lso pdi.tar.gz https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/master/pdi-master.tar.gz &&
+                              tar -xf pdi.tar.gz &&
+                              cd pdi* &&
+                              sh tools/build_scripts/xenial_cmake3.10_embedded.sh\"
     - name: xenial_libs_cmake3.5_test
       run: docker run -t pdidevel/xenial_libs_cmake3.5 /bin/bash -c \
-                              "curl -Lso pdi.tar.gz https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/master/pdi-master.tar.gz && \
-                              tar -xf pdi.tar.gz && \
-                              cd pdi* && \
-                              sh tools/build_scripts/xenial_cmake3.5_system.sh"
+                              \"curl -Lso pdi.tar.gz https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/master/pdi-master.tar.gz &&
+                              tar -xf pdi.tar.gz &&
+                              cd pdi* &&
+                              sh tools/build_scripts/xenial_cmake3.5_system.sh\"
     - name: xenial_libs_cmake3.10_test
       run: docker run -t pdidevel/xenial_libs_cmake3.10 /bin/bash -c \
-                              "curl -Lso pdi.tar.gz https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/master/pdi-master.tar.gz && \
-                              tar -xf pdi.tar.gz && \
-                              cd pdi* && \
-                              sh tools/build_scripts/xenial_cmake3.10_system.sh"
+                              \"curl -Lso pdi.tar.gz https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/master/pdi-master.tar.gz &&
+                              tar -xf pdi.tar.gz &&
+                              cd pdi* &&
+                              sh tools/build_scripts/xenial_cmake3.10_system.sh\"
     - name: publish
       if: ${{ github.event_name == 'push' }}
       env:
@@ -62,26 +62,28 @@ jobs:
         docker build -t pdidevel/centos_libs_cmake3.5 centos_libs_cmake3.5
     - name: centos_cmake3.5_test
       run: docker run -t pdidevel/centos_cmake3.5 /bin/bash -c \
-                              "curl -Lso pdi.tar.gz https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/master/pdi-master.tar.gz && \
-                              tar -xf pdi.tar.gz"
+                              \"curl -Lso pdi.tar.gz https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/master/pdi-master.tar.gz &&
+                              tar -xf pdi.tar.gz &&
+                              cd pdi* &&
+                              DISABLE_CTEST=1 && sh tools/build_scripts/centos_cmake3.5_embedded.sh\"
     - name: centos_cmake3.10_test
       run: docker run -t pdidevel/centos_cmake3.10 /bin/bash -c \
-                              "curl -Lso pdi.tar.gz https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/master/pdi-master.tar.gz && \
-                              tar -xf pdi.tar.gz && \
-                              cd pdi* && \
-                              DISABLE_CTEST=1 && sh tools/build_scripts/centos_cmake3.10_embedded.sh"
+                              \"curl -Lso pdi.tar.gz https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/master/pdi-master.tar.gz &&
+                              tar -xf pdi.tar.gz &&
+                              cd pdi* &&
+                              DISABLE_CTEST=1 && sh tools/build_scripts/centos_cmake3.10_embedded.sh\"
     - name: centos_libs_cmake3.5_test
       run: docker run -t pdidevel/centos_libs_cmake3.5 /bin/bash -c \
-                              "curl -Lso pdi.tar.gz https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/master/pdi-master.tar.gz && \
-                              tar -xf pdi.tar.gz && \
-                              cd pdi* && \
-                              DISABLE_CTEST=1 && sh tools/build_scripts/centos_cmake3.5_system.sh"
+                              \"curl -Lso pdi.tar.gz https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/master/pdi-master.tar.gz &&
+                              tar -xf pdi.tar.gz &&
+                              cd pdi* &&
+                              DISABLE_CTEST=1 && sh tools/build_scripts/centos_cmake3.5_system.sh\"
     - name: centos_libs_cmake3.10_test
       run: docker run -t pdidevel/centos_libs_cmake3.10 /bin/bash -c \
-                              "curl -Lso pdi.tar.gz https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/master/pdi-master.tar.gz && \
-                              tar -xf pdi.tar.gz && \
-                              cd pdi* && \
-                              DISABLE_CTEST=1 && sh tools/build_scripts/centos_cmake3.10_system.sh"     
+                              \"curl -Lso pdi.tar.gz https://gitlab.maisondelasimulation.fr/pdidev/pdi/-/archive/master/pdi-master.tar.gz &&
+                              tar -xf pdi.tar.gz &&
+                              cd pdi* &&
+                              DISABLE_CTEST=1 && sh tools/build_scripts/centos_cmake3.10_system.sh\"     
     - name: publish
       if: ${{ github.event_name == 'push' }}
       env:
