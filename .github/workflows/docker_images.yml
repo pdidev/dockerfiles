@@ -43,6 +43,9 @@ jobs:
         docker run -e DOCKER_RUNNER=github -t -v $PWD/pdi_repo:/data/ pdidevel/xenial_libs_cmake3.10 /bin/bash -c \
             "mkdir /tmp/pdi_repo && cp -a /data/ /tmp/pdi_repo && cd /tmp/pdi_repo/data/ \
              && sh tools/build_scripts/build_and_run.sh"
+    - name: build xenial_pdi
+      run: |
+        docker build -t pdidevel/xenial_pdi -f xenial_pdi/Dockerfile .
     - name: publish
       if: ${{ github.event_name == 'push' }}
       env:
@@ -53,6 +56,7 @@ jobs:
         docker push pdidevel/xenial_cmake3.10
         docker push pdidevel/xenial_libs_cmake3.5
         docker push pdidevel/xenial_libs_cmake3.10
+        docker push pdidevel/xenial_pdi
   build_centos:
     runs-on: ubuntu-latest
     steps:
