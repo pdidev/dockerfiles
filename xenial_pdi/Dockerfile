@@ -5,7 +5,8 @@ USER 0
 COPY pdi_repo /tmp/pdi_repo/data/
 
 RUN cd /tmp/pdi_repo/data/ \
- && sh tools/build_scripts/build_and_run.sh \
+ && cmake -DDIST_PROFILE=Devel -DUSE_DEFAULT=SYSTEM -DUSE_SIONlib=SYSTEM -DUSE_Bpp=SYSTEM . \
+ && make -j \
  && make install
 
 FROM pdidevel/xenial_libs_cmake3.10
