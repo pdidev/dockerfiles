@@ -45,7 +45,8 @@ jobs:
              && sh tools/build_scripts/build_and_run.sh"
     - name: build xenial_pdi
       run: |
-        docker build -t pdidevel/xenial_pdi -f xenial_pdi/Dockerfile .
+        cp -la pdi_repo xenial_pdi/
+        docker build -t pdidevel/xenial_pdi xenial_pdi
     - name: publish
       if: ${{ github.event_name == 'push' }}
       env:
