@@ -49,6 +49,9 @@ jobs:
       run: |
         cp -la pdi_repo xenial_pdi/
         docker build -t pdidevel/xenial_pdi xenial_pdi
+    - name: build pdi_tutorial
+      run: |
+        docker build -t pdidevel/pdi_tutorial pdi_tutorial
     - name: publish
       if: ${{ github.event_name == 'push' }}
       env:
@@ -60,6 +63,7 @@ jobs:
         docker push pdidevel/xenial_libs_cmake3.5
         docker push pdidevel/xenial_libs_cmake3.10
         docker push pdidevel/xenial_pdi
+        docker push pdidevel/pdi_tutorial
   build_centos:
     runs-on: ubuntu-latest
     steps:
