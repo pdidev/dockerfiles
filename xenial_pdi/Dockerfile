@@ -15,5 +15,6 @@ USER 0
 
 COPY --from=builder /usr/local /usr/local
 RUN echo ". /usr/local/share/pdi/env.bash" > /etc/profile.d/zzz_enable_pdi.sh
+ && apt install hdf5-tools -y
 
 USER 1001
