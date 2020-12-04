@@ -15,7 +15,13 @@ USER 0
 
 COPY --from=builder /usr/local /usr/local
 RUN echo ". /usr/local/share/pdi/env.bash" > /etc/profile.d/zzz_enable_pdi.sh \
- && apt update \
- && apt install hdf5-tools -y
+ && apt-get update -y \
+ && apt-get upgrade -y \
+ && apt-get install -y --no-install-recommends \
+    hdf5-tools \
+ && apt-get autoremove -y \
+ && apt-get clean -y \
+ && apt-get autoclean -y \
+ && rm -rf /var/lib/apt/lists/*
 
 USER 1001
