@@ -26,8 +26,6 @@ jobs:
           --cache-from ghcr.io/pdidev/dockerfiles/pditst:nodask \
           -t ghcr.io/pdidev/dockerfiles/pditst:nodask \
           -t ghcr.io/pdidev/dockerfiles/pditst:nodask-${image_version} \
-          -t ghcr.io/pdidev/dockerfiles/centos_libs \
-          -t ghcr.io/pdidev/dockerfiles/pditst:nodask-${image_version} \
           1-bionic
     - name: publish nodask
       env:
@@ -108,6 +106,7 @@ jobs:
         docker push ghcr.io/pdidev/dockerfiles/pditst:${COMPILER}-nompi-${image_version}
   step4_build_mpi:
     strategy:
+      fail-fast: false
       matrix:
         compiler: ['gcc_latest', 'gcc_7.5.0', 'clang_latest', 'clang_8.0.0']
         mpi:      ['openmpi_latest', 'openmpi_2.1.1']
