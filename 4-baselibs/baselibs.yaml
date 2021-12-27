@@ -1,0 +1,20 @@
+spack:
+  concretization: together
+  specs:
+  - cmake~ownlibs^curl tls=openssl
+  - matrix:
+    - [ '^cmake~ownlibs' ]
+    - [ '^curl tls=openssl' ]
+    -
+      - bison
+      - flex
+      - freeglut
+      - glew
+      - hwloc
+      - libiconv
+      - libxml2
+      - libxmu
+      - libxslt
+      - mesa~llvm
+      - pkgconf
+      - swig

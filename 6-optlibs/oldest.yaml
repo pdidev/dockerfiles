@@ -1,0 +1,40 @@
+spack:
+  concretization: together
+  specs:
+  - cmake~ownlibs^curl tls=openssl
+  - matrix:
+    - [ '^cmake~ownlibs' ]
+    - [ '^curl tls=openssl' ]
+    - [ '^@MPI@' ]
+    -
+      - bison
+      - flex
+      - freeglut
+      - glew
+      - hwloc
+      - libiconv
+      - libxml2
+      - libxmu
+      - libxslt
+      - mesa~llvm
+      - pkgconf
+      - swig
+      - @MPI@
+      - py-mpi4py@2.0.0
+      - astyle
+      - doxygen@1.8.15
+      - flowvr@2.3.2
+      - fti@1.6~hdf5
+      #TODO: fails with recent clang due to https://github.com/google/googletest/issues/3427
+      #- googletest+gmock
+      #
+      - hdf5@1.8.10
+      - libyaml@0.2.2
+      - netcdf-c@4.3.3
+      - paraconf@0.4.14
+      - py-numpy@1.13.3^intel-mkl
+      - py-pybind11@2.3.0
+      - py-pyyaml@3.11
+      - sionlib@1.7.6~fortran
+      - spdlog@1.4.2
+      - zpp@1.0.8

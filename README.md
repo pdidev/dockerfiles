@@ -1,56 +1,37 @@
 # Docker images:
 
-A set of related Docker images to build and test PDI.
+A set of related Docker images to build and test PDI 
+[`pdidevel/pditst`](https://hub.docker.com/repository/docker/pdidevel/pditst).
 
-Their relationship is as follow:
-```
-xenial_cmake3.5 -> xenial_libs_cmake3.5 -> xenial_libs_cmake3.10
-               \
-                `-> xenial_cmake3.10
-```
+The images come in two categories of tags:
+* `pdidevel/pditst:${compiler}-${mpi}-${cmake}`
+* `pdidevel/pditst:${compiler}-${mpi}-${cmake}-${libs}`
 
-## xenial_cmake3.5
+All images are based on Ubuntu 18.08, with dependencies installed through
+spack.
+One should run `spack load` to make them available at compile-time.
+Both the latest version of CMake available in spack at the time of
+generation and `cmake-3.10.0` are available in the image.
 
-Ubuntu Xenial with the minimal set of dependencies installed to build the full
-PDI distribution in "embedded" mode (without running the tests).
-
-Used for PDI "embedded" build with cmake 3.5 (using all libs embedded in the PDI
-distribution, except for SIONlib)
-
-## xenial_cmake3.10
-
-xenial_cmake3.5 extented with the minimal dependencies to build the full PDI 
-distribution with cmake-3.10 and to run the tests:
-* cmake 3.10
-
-Used for PDI "embedded" build and tests with cmake 3.10 (using all libs embedded
-in the PDI distribution)
-
-## xenial_libs_cmake3.5
-
-Building of the dependencies required for the PDI distribution without relying
-on embedded dependencies:
-* doxygen,
-* flowvr,
-* fti,
-* netcdf.
-
-Installation of the libs that are available as packages:
-* astyle,
-* hdf5,
-* paraconf,
-* spdlog,
-* pybind11,
-* zpp.
-
-Used for PDI "system" build with cmake 3.5 (using all libs from the docker
-image)
-
-## xenial_libs_cmake3.10
-
-xenial_libs_cmake3.5 extented with the minimal dependencies to build the full
-PDI distribution with cmake-3.10 and to run the tests:
-* cmake 3.10
-
-Used for PDI "system" build and tests with cmake 3.10 (using all libs from the
-docker image)
+The parameters are as follow:
+* compiler:
+  - `gcc_7.5.0`  the oldest version of GCC supported by PDI,
+  - `gcc_latest` the latest version of GCC available in spack at the time of
+    generation,
+  - `clang_8.0.0`  the oldest version of clang supported by PDI,
+  - `clang_latest` the latest version of clang available in spack at the time
+    of generation,
+* mpi:
+  - `openmpi_2.1.1`  the oldest version of OpenMPI supported by PDI,
+  - `openmpi_latest` the latest version of OpenMPI available in spack at the
+    time of generation,
+* cmake:
+  - `cmake_3.10`  the oldest version of OpenMPI supported by PDI,
+  - `cmake_latest` the latest version of OpenMPI available in spack at the
+    time of generation,
+* libs:
+  - without `-${libs}`: libraries "vendored" in PDI are not included,
+  - `libs_oldest` the oldest versions of the libraries "vendored" in PDI are
+    included,
+  - `libs_latest` the latest versions of the libraries "vendored" in PDI are
+    included,
